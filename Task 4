@@ -1,0 +1,17 @@
+void Task4() {  // The highest time execution time for task 4 is 65us/ 0.1ms
+  monitor.jobStarted(4); // The monitor measures time taken by task 4
+  pv = analogRead(ptm); // Analog readings from ptm to pv
+  v = (3.3 * pv)/4095; // Readings scaled between 0 and 3.33v
+  avr1=avr2;
+  avr2=avr3;
+  avr3=avr4;
+  avr4=v;
+  avg = (avr1+avr2+avr3+avr4)/4; // Readings average
+  if (avg>1.65) { // Half value of the average
+    digitalWrite(ledY,HIGH);
+  }
+  else {
+    digitalWrite(ledY,LOW);
+  }
+ monitor.jobEnded(4);  // The monitor takes stores the value
+}
