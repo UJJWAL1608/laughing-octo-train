@@ -1,0 +1,11 @@
+void Task2() { // The highest time execution time for task 2 is 2935us/ 3ms
+  monitor.jobStarted(2); // The monitor measures time taken by task 2
+  while (digitalRead(sp1) == LOW);
+  time1 = micros();
+  while (digitalRead(sp1) == HIGH);
+  time2 = micros();
+  period = (time2 - time1) * 0.000001; // Conversion to microseconds
+  frequency = 1 / (period*2) ;
+  monitor.jobEnded(2);  // The monitor takes stores the value
+
+}
