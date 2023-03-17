@@ -1,0 +1,60 @@
+void frame() {
+  unsigned int slot = frameCounter % 50;
+
+  switch (slot) {
+    case 0:  Task1();             Task3();                               break;
+    case 1:  Task1();  Task2();                                          break;
+    case 2:  Task1();             Task3();                               break;
+    case 3:  Task1();                           Task4();                 break;
+    case 4:  Task1();             Task3();                               break;
+    case 5:  Task1();  Task2();                                          break;
+    case 6:  Task1();             Task3();                               break;
+    case 7:  Task1();                                                    break;
+    case 8:  Task1();             Task3();                               break;
+    case 9:  Task1();                           Task4();                 break;
+    case 10: Task1();             Task3();                               break;
+    case 11: Task1();  Task2();                                          break;
+    case 12: Task1();             Task3();                               break;
+    case 13: Task1();                           Task4();                 break;
+    case 14: Task1();             Task3();                               break;
+    case 15: Task1();  Task2();                                          break;
+    case 16: Task1();             Task3();                               break;
+    case 17: Task1();                                                    break;
+    case 18: Task1();             Task3();                               break;
+    case 19: Task1();                           Task4();                 break;
+    case 20: Task1();             Task3();                               break;
+    case 21: Task1();  Task2();                                          break;
+    case 22: Task1();             Task3();                               break;
+    case 23: Task1();                           Task4();                 break;
+    case 24: Task1();             Task3();                 Task5();      break;
+    case 25: Task1();  Task2();                                          break;
+    case 26: Task1();             Task3();                               break;
+    case 27: Task1();                                                    break;
+    case 28: Task1();             Task3();                               break;
+    case 29: Task1();                           Task4();                 break;
+    case 30: Task1();             Task3();                               break;
+    case 31: Task1();  Task2();                                          break;
+    case 32: Task1();             Task3();                               break;
+    case 33: Task1();                           Task4();                 break;
+    case 34: Task1();             Task3();                               break;
+    case 35: Task1();  Task2();                                          break;
+    case 36: Task1();             Task3();                               break;
+    case 37: Task1();                                                    break;
+    case 38: Task1();             Task3();                               break;
+    case 39: Task1();                           Task4();                 break;
+    case 40: Task1();             Task3();                               break;
+    case 41: Task1();  Task2();                                          break;
+    case 42: Task1();             Task3();                               break;
+    case 43: Task1();                           Task4();                 break;
+    case 44: Task1();             Task3();                               break;
+    case 45: Task1();  Task2();                                          break;
+    case 46: Task1();             Task3();                               break;
+    case 47: Task1();                                                    break;
+    case 48: Task1();             Task3();                               break;
+    case 49: Task1();                           Task4();   Task5();      break;
+ 
+  }
+  frameCounter++;
+  
+  
+  }
