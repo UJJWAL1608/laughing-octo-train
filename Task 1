@@ -1,0 +1,12 @@
+void Task1() { // The highest time execution time for task 1 is 292us/ 0.3ms
+  monitor.jobStarted(1); // The monitor measures time taken by task 1
+  digitalWrite(ledR,HIGH);
+  delayMicroseconds(200);
+  digitalWrite(ledR,LOW);
+  delayMicroseconds(50);
+  digitalWrite(ledR,HIGH);
+  delayMicroseconds(30);
+  digitalWrite(ledR,LOW);
+  monitor.jobEnded(1); // The monitor takes stores the value
+
+}
