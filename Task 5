@@ -1,0 +1,18 @@
+void Task5() { // The highest time execution time for task 5 is 175us/ 0.2ms
+  monitor.jobStarted(5); // The monitor measures time taken by task 5
+  mf1 = 0;
+  mf2 = 0;
+  mf1 = (99* (frequency - fqmin2 )) / (fqmax2 - fqmin2); // Scaling between 0 and 99
+  mf2 = (99 * (frequency1 - fqmin3 )) / (fqmax3 - fqmin3); // Scaling between 0 and 99
+ 
+  if(mf1<=0) {mf1=0;}
+  else {mf1 = 99;}
+
+  if(mf2 <=0) {mf2 = 0;}
+  else {mf2 = 99;} 
+  
+  Serial.printf("%d, %d\n" , mf1 , mf2); // Printing the values
+  monitor.jobEnded(5); // The monitor takes stores the value
+
+}
+ 
