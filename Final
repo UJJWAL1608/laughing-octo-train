@@ -1,0 +1,205 @@
+#include <B31DGMonitor.h>                         // Including Monitor library
+#include <Ticker.h>      // Include Ticker library
+B31DGCyclicExecutiveMonitor monitor;                              
+
+// Declare variables to represent pins and parameters 
+int ledR = 1; // LED Red is connected to pin 1
+int ledY = 2; // LED Yellow is connected to pin 2
+int ptm = 4;  // Potentiometer is connected to pin 4
+int sp1 = 7; // Input signal pin for case 2 is connected to pin 7
+int sp2 = 9; // Input signal pin for case 3 is connected to pin 9
+unsigned long time1 = 0; // Store the current time value as time 1
+unsigned long time2 = 0; // store the current time value as time 2
+unsigned long time3 = 0; // Store the current time value as time 3
+unsigned long  time4 = 0; // store the current time value as time 4
+float period; // Period value for task 2
+float frequency; // frequency value for task 2
+float period1;  // period value for task 3
+float frequency1; // frequency value for task 3
+float fqmin2 = 333; // Minimum Frequency initialized to 333Hz for case 2
+float fqmax2 = 1000; // Maximum Frequency initialized to 1000Hz for case 2
+float fqmin3 = 500; // Minimum Frequency initialized to 500Hz for case 3
+float fqmax3 = 1000; //  Maximum Frequency initialized to 1000Hz for case 3
+float pv; //  Reading analog value from potentiometer for case 4
+float v; //  voltage for case 4
+float avr1 = 0; // analog voltage reading 1
+float avr2 = 0; // analog voltage reading 2
+float avr3 = 0; // analog voltage reading 3
+float avr4 = 0; // analog voltage reading 4
+float avg = 0; // average of 4 readings
+float mf1; // Modulated frequency 1
+float mf2; // Modulated frequency 2
+unsigned long frameTime = 0;
+unsigned long frameCounter = 0;
+Ticker ticker;
+
+
+void setup() {
+  // put your setup code here, to run once:
+ 
+  pinMode(ledR, OUTPUT); // Setting ledR as output pin
+  pinMode(ledY,OUTPUT); // Setting ledY as output pin
+  pinMode(ptm,INPUT); // Setting ptm as input pin
+  pinMode(sp1, INPUT);  // Setting sp1 as input pin
+  pinMode(sp2, INPUT); // Setting sp2 as input pin
+  Serial.begin(9600); // The serial monitor baud rate is set as 9600
+  monitor.startMonitoring();
+  frame();
+  ticker.attach_ms(4,frame);
+
+}
+
+void loop()
+{
+}
+  
+void frame() {
+  unsigned int slot = frameCounter % 50;
+
+  switch (slot) {
+    case 0:  Task1();             Task3();                               break;
+    case 1:  Task1();  Task2();                                          break;
+    case 2:  Task1();             Task3();                               break;
+    case 3:  Task1();                           Task4();                 break;
+    case 4:  Task1();             Task3();                               break;
+    case 5:  Task1();  Task2();                                          break;
+    case 6:  Task1();             Task3();                               break;
+    case 7:  Task1();                                                    break;
+    case 8:  Task1();             Task3();                               break;
+    case 9:  Task1();                           Task4();                 break;
+    case 10: Task1();             Task3();                               break;
+    case 11: Task1();  Task2();                                          break;
+    case 12: Task1();             Task3();                               break;
+    case 13: Task1();                           Task4();                 break;
+    case 14: Task1();             Task3();                               break;
+    case 15: Task1();  Task2();                                          break;
+    case 16: Task1();             Task3();                               break;
+    case 17: Task1();                                                    break;
+    case 18: Task1();             Task3();                               break;
+    case 19: Task1();                           Task4();                 break;
+    case 20: Task1();             Task3();                               break;
+    case 21: Task1();  Task2();                                          break;
+    case 22: Task1();             Task3();                               break;
+    case 23: Task1();                           Task4();                 break;
+    case 24: Task1();             Task3();                 Task5();      break;
+    case 25: Task1();  Task2();                                          break;
+    case 26: Task1();             Task3();                               break;
+    case 27: Task1();                                                    break;
+    case 28: Task1();             Task3();                               break;
+    case 29: Task1();                           Task4();                 break;
+    case 30: Task1();             Task3();                               break;
+    case 31: Task1();  Task2();                                          break;
+    case 32: Task1();             Task3();                               break;
+    case 33: Task1();                           Task4();                 break;
+    case 34: Task1();             Task3();                               break;
+    case 35: Task1();  Task2();                                          break;
+    case 36: Task1();             Task3();                               break;
+    case 37: Task1();                                                    break;
+    case 38: Task1();             Task3();                               break;
+    case 39: Task1();                           Task4();                 break;
+    case 40: Task1();             Task3();                               break;
+    case 41: Task1();  Task2();                                          break;
+    case 42: Task1();             Task3();                               break;
+    case 43: Task1();                           Task4();                 break;
+    case 44: Task1();             Task3();                               break;
+    case 45: Task1();  Task2();                                          break;
+    case 46: Task1();             Task3();                               break;
+    case 47: Task1();                                                    break;
+    case 48: Task1();             Task3();                               break;
+    case 49: Task1();                           Task4();   Task5();      break;
+ 
+  }
+  frameCounter++;
+  
+  
+  }
+
+void Task1() { // The highest time execution time for task 1 is 292us/ 0.3ms
+  monitor.jobStarted(1); // The monitor measures time taken by task 1
+  digitalWrite(ledR,HIGH);
+  delayMicroseconds(200);
+  digitalWrite(ledR,LOW);
+  delayMicroseconds(50);
+  digitalWrite(ledR,HIGH);
+  delayMicroseconds(30);
+  digitalWrite(ledR,LOW);
+  monitor.jobEnded(1); // The monitor takes stores the value
+
+}
+
+void Task2() { // The highest time execution time for task 2 is 2935us/ 3ms
+  monitor.jobStarted(2); // The monitor measures time taken by task 2
+  while (digitalRead(sp1) == LOW);
+  time1 = micros();
+  while (digitalRead(sp1) == HIGH);
+  time2 = micros();
+  period = (time2 - time1) * 0.000001; // Conversion to microseconds
+  frequency = 1 / (period*2) ;
+  monitor.jobEnded(2);  // The monitor takes stores the value
+
+}
+
+void Task3() {  // The highest time execution time for task 3 is 1935us/ 2ms
+  monitor.jobStarted(3); // The monitor measures time taken by task 3
+  while (digitalRead(sp2) == LOW);
+  time3 = micros();
+  while (digitalRead(sp2) == HIGH);
+  time4 = micros();
+  period1 = (time4 - time3) * 0.000001; // Conversion to microseconds
+  frequency1 = 1 / (period1 * 2);
+  monitor.jobEnded(3);  // The monitor takes stores the value
+  
+
+}
+
+void Task4() {  // The highest time execution time for task 4 is 65us/ 0.1ms
+  monitor.jobStarted(4); // The monitor measures time taken by task 4
+  pv = analogRead(ptm); // Analog readings from ptm to pv
+  v = (3.3 * pv)/4095; // Readings scaled between 0 and 3.33v
+  avr1=avr2;
+  avr2=avr3;
+  avr3=avr4;
+  avr4=v;
+  avg = (avr1+avr2+avr3+avr4)/4; // Readings average
+  if (avg>1.65) { // Half value of the average
+    digitalWrite(ledY,HIGH);
+  }
+  else {
+    digitalWrite(ledY,LOW);
+  }
+ monitor.jobEnded(4);  // The monitor takes stores the value
+}
+
+
+void Task5() { // The highest time execution time for task 5 is 175us/ 0.2ms
+  monitor.jobStarted(5); // The monitor measures time taken by task 5
+  mf1 = 0;
+  mf2 = 0;
+  mf1 = (99* (frequency - fqmin2 )) / (fqmax2 - fqmin2); // Scaling between 0 and 99
+  mf2 = (99 * (frequency1 - fqmin3 )) / (fqmax3 - fqmin3); // Scaling between 0 and 99
+ 
+  if(mf1<=0) {mf1=0;}
+  else {mf1 = 99;}
+
+  if(mf2 <=0) {mf2 = 0;}
+  else {mf2 = 99;} 
+  
+  Serial.printf("%d, %d\n" , mf1 , mf2); // Printing the values
+  monitor.jobEnded(5); // The monitor takes stores the value
+
+}
+ 
+
+
+  
+
+
+  
+
+
+
+
+  
+
+
+
